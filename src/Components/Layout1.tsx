@@ -29,7 +29,7 @@ export default class Layout1 extends React.Component {
 
   render() {
     return (
-        <BrowserRouter>
+
           <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
               <div className="logo"/>
@@ -74,7 +74,7 @@ export default class Layout1 extends React.Component {
               <Footer style={{ textAlign: 'center' }}>Copyleft</Footer>
             </Layout>
           </Layout>
-        </BrowserRouter>
+
     );
   }
 }
