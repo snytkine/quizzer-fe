@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="950664b0-380f-4b9c-be49-00da5351b7e8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/MY CPP.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/MY CPP.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/MY CPP.xcodeproj/project.xcworkspace/xcuserdata/snytkind.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/MY CPP.xcodeproj/xcuserdata/snytkind.xcuserdatad/xcschemes/MY CPP.xcscheme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/MY CPP.xcodeproj/xcuserdata/snytkind.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/hello.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../MY CPP/hello.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../bind/src/framework/identity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/ceh-microservice-ldap/project.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/ceh-microservice-ldap/values.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/docker-base-images/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/docker-base-images/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/docker-base-images/Node_12_14_alpine" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/docker-base-images/Node_12_14_buster" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/docker-base-images/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/my_mssql/.npmrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/my_mssql/src/app1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/my_mssql/src/app2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/node-alpine-12.11.10-base/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/node-alpine-12.11.10-base/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/reactui-http-server/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/reactui-http-server/.npmrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ceh/reactui-http-server/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-documentation/assets/img/sample_bind_app.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.npmrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest-users/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind-rest/src/lib/types/methoddecorator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/__childtest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/app.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/app2.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/cat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/combinator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/childuser.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/func1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/logger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/proxy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/settings.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/components/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/consumer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/getexports.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/getexports.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/hurdles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/inject.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/inject/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/inject/prop.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/metas/child" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/metas/teller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myns/child.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myns/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myrequire/car.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myrequire/document.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myrequire/garage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/myrequire/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/src/test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../bind_sandbox/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/build/myrouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/build/myrouter.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/build/types/myrouter.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/node-build-os.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/src/myrouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sandbox_holiday/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring/spring-5/src/main/java/com/snytkine/rxdemo/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/AvgRatingModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/DeliveryInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/LegoSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/LegoSetDifficulty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/PaymentOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/PaymentType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/model/ProductReview.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../udemy/legostore/src/main/java/rc/legostore/persistence/LegoSetRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../winston_3/src/cehlogger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../winston_3/src/mylogger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../winston_3/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1bcZPwA3QaNlis0oYHIWiVddG4P" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="950664b0-380f-4b9c-be49-00da5351b7e8" name="Default Changelist" comment="" />
+      <created>1588933321257</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588933321257</updated>
+      <workItem from="1588933322971" duration="179000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>
