@@ -24,17 +24,19 @@ let Counter: React.FunctionComponent<ICounterComponent> = (props) => {
 
   const { increment, decrement, counter } = props;
   return (
-      <div className="site-card-border-less-wrapper">
-        <Card title={counter} bordered={false} style={{ width: 300 }}>
-          <Button id="btn1" type="primary" block onClick={() => increment()} style={{ marginBottom: '4px' }}>
-            Increment Counter
-          </Button>
+      <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+        <div className="site-card-border-less-wrapper">
+          <Card title={String(counter)} bordered={true} style={{ width: 300 }}>
+            <Button id="btn1" type="primary" block onClick={() => increment()} style={{ marginBottom: '4px' }}>
+              Increment Counter
+            </Button>
 
-          <Button id="btn2" block onClick={() => decrement()}>
-            Decrement Counter
-          </Button>
+            <Button id="btn2" block onClick={() => decrement()}>
+              Decrement Counter
+            </Button>
 
-        </Card>
+          </Card>
+        </div>
       </div>
   );
 };
