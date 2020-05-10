@@ -124,6 +124,7 @@ export const QuestionEditor = () => {
                                 <Form.Item
                                     name={[field.name, 'isCorrect']}
                                     fieldKey={field.fieldKey}
+
                                 >
 
                                   <Radio.Group buttonStyle="solid">

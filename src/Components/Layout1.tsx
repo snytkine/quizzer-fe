@@ -13,6 +13,7 @@ import CreateQuestion from './editor/CreateQuestion';
 import QuizList from './quiz/list';
 import Counter from './Counter';
 import { QuestionEditor } from './editor/QuestionEditor';
+import ReduxFormEditor from './editor/ReduxFormEditor';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -46,6 +47,9 @@ export default class Layout1 extends React.Component {
                     <Link to="aformeditor">Question Editor</Link>
                   </Menu.Item>
                   <Menu.Item key="14">
+                    <Link to="reduxformeditor">Redux Editor</Link>
+                  </Menu.Item>
+                  <Menu.Item key="15">
                     <Link to="counter">Counter</Link>
                   </Menu.Item>
                 </SubMenu>
@@ -61,6 +65,7 @@ export default class Layout1 extends React.Component {
                 <Routes>
                   <Route path="editor" element={<CreateQuestion/>}/>
                   <Route path="aformeditor" element={<QuestionEditor/>}/>
+                  <Route path="reduxformeditor" element={<ReduxFormEditor/>}/>
                   <Route path="quiz" element={<QuizList/>}/>
                   <Route path="counter" element={<Counter/>}/>
                 </Routes>
