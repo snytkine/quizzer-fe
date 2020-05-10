@@ -1,9 +1,41 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import { Field, FieldArray, reduxForm, change } from 'redux-form';
+import { connect } from 'react-redux';
 import validate from './validate';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Card, Col, Switch } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
+
+const renderAnswerTitle = (props: { id: number, fieldName: string }) => {
+  const { id, fieldName } = props;
+  return (
+      <div>
+        <span>{`Answer ${id + 1}`}</span>
+        <Field
+            name={`${fieldName}.isCorrect`}
+            type="checkbox"
+            component={renderField}
+            label="Is Correct"
+        />
+      </div>
+  );
+
+};
+
+let IsCorrectSwitch = (props: {answer: string, dispatch?: Function}) => {
+
+  const {answer, dispatch} = props;
+
+  return <Switch
+      checkedChildren="Correct"
+      unCheckedChildren="  Incorrect "
+      onChange={(checked) => {
+        dispatch(change('editQuestion', `${answer}.isCorrect`, checked));
+      }}/>
+};
+
+IsCorrectSwitch = connect()(IsCorrectSwitch);
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
     <div>
@@ -53,57 +85,64 @@ const renderHobbies = ({ fields, meta: { error } }) => (
 );
 
 
-const renderAnswers = ({ fields, meta: { error, submitFailed } }) => (
-    <ul>
-      <li>
+let renderAnswers = ({ fields, meta: { error, submitFailed }, dispatch }) => (
+    <div>
+      <div>
         <button type="button" onClick={() => fields.push({})}>
           Add Answer
         </button>
         {submitFailed && error && <span>{error}</span>}
-      </li>
+      </div>
       {fields.map((answer, index) => {
+
 
             console.log('answer=', JSON.stringify(answer));
 
-            return (<li key={index}>
-              <button
-                  type="button"
-                  title="Remove Answer"
-                  onClick={() => fields.remove(index)}
-              />
-              <h4>Answer #{index + 1}</h4>
+            return (
+                <div key={index}>
+                  <Card title={`Answer ${index + 1}`}
+                        extra={<Switch checkedChildren="1" unCheckedChildren="0"/>}
+                        style={{ width: '100%' }}
+                        actions={[
+                          <IsCorrectSwitch answer={answer}/>,
+                          <MinusCircleOutlined
+                              className="dynamic-delete-button"
+                              onClick={() => fields.remove(index)}
+                          />,
+                        ]}>
+                    <Field
+                        name={`${answer}.body`}
+                        type="text"
+                        component={renderTextArea}
+                        rows={4}
+                        cols={40}
+                        label="Answer"
+                    />
 
-              <Field
-                  name={`${answer}.body`}
-                  type="text"
-                  component={renderTextArea}
-                  rows={4}
-                  cols={40}
-                  label="Answer"
-              />
+                    <Field
+                        name={`${answer}.explanation`}
+                        type="text"
+                        component={renderTextArea}
+                        label="Explanation"
+                    />
+                  </Card>
 
-              <Field
-                  name={`${answer}.explanation`}
-                  type="text"
-                  component={renderTextArea}
-                  label="Explanation"
-              />
+                  <button
+                      type="button"
+                      title="Remove Answer"
+                      onClick={() => fields.remove(index)}
+                  />
 
-              <Field
-                  name={`${answer}.isCorrect`}
-                  type="checkbox"
-                  component={renderField}
-                  label="Is Correct"
-              />
-              //@ts-ignore
-              <FieldArray name={`${answer}.hobbies`} component={renderHobbies}/>
-            </li>);
+                  //@ts-ignore
+                  <FieldArray name={`${answer}.hobbies`} component={renderHobbies}/>
+                </div>);
           },
       )}
-    </ul>
+    </div>
 );
 
-const FieldArraysForm = props => {
+
+let QuestionEditorForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
       <form onSubmit={handleSubmit}>
@@ -130,8 +169,10 @@ const FieldArraysForm = props => {
   );
 };
 
+renderAnswers = connect()(renderAnswers);
+
 export default reduxForm({
-  form: 'fieldArrays', // a unique identifier for this form
+  form: 'editQuestion', // a unique identifier for this form
   initialValues: {
     question: 'Can you answer this question?', answers: [{
       answer: 'This is correct',
@@ -143,4 +184,4 @@ export default reduxForm({
     console.log(data);
   },
   validate,
-})(FieldArraysForm);
+})(QuestionEditorForm);
