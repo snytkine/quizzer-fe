@@ -17,13 +17,13 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 
 
 const renderTextArea = ({ input, label, type, meta: { touched, error } }) => (
-    <Form.Item
-        label="Question"
-        name="question"
-        rules={[{ required: true, message: 'Please type the question' }]}
-    >
-      <TextArea rows={6}/>
-    </Form.Item>
+    <div>
+      <label>{label}</label>
+      <div>
+        <TextArea {...input} rows={6}/>
+        {touched && error && <span>{error}</span>}
+      </div>
+    </div>
 );
 
 const renderHobbies = ({ fields, meta: { error } }) => (
@@ -53,46 +53,53 @@ const renderHobbies = ({ fields, meta: { error } }) => (
 );
 
 
-const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
+const renderAnswers = ({ fields, meta: { error, submitFailed } }) => (
     <ul>
       <li>
         <button type="button" onClick={() => fields.push({})}>
-          Add Member
+          Add Answer
         </button>
         {submitFailed && error && <span>{error}</span>}
       </li>
-      {fields.map((member, index) => (
-          <li key={index}>
-            <button
-                type="button"
-                title="Remove Member"
-                onClick={() => fields.remove(index)}
-            />
-            <h4>Answer #{index + 1}</h4>
-            <Field
-                name={`${member}.question`}
-                type="text"
-                component="textarea"
-                rows={4}
-                cols={40}
-                label="Answer"
-            />
-            <Field
-                name={`${member}.lastName`}
-                type="text"
-                component={renderField}
-                label="Last Name"
-            />
-            <Field
-                name={`${member}.isCorrect`}
-                type="checkbox"
-                component={renderField}
-                label="Is Correct"
-            />
-            //@ts-ignore
-            <FieldArray name={`${member}.hobbies`} component={renderHobbies}/>
-          </li>
-      ))}
+      {fields.map((answer, index) => {
+
+            console.log('answer=', JSON.stringify(answer));
+
+            return (<li key={index}>
+              <button
+                  type="button"
+                  title="Remove Answer"
+                  onClick={() => fields.remove(index)}
+              />
+              <h4>Answer #{index + 1}</h4>
+
+              <Field
+                  name={`${answer}.body`}
+                  type="text"
+                  component={renderTextArea}
+                  rows={4}
+                  cols={40}
+                  label="Answer"
+              />
+
+              <Field
+                  name={`${answer}.explanation`}
+                  type="text"
+                  component={renderTextArea}
+                  label="Explanation"
+              />
+
+              <Field
+                  name={`${answer}.isCorrect`}
+                  type="checkbox"
+                  component={renderField}
+                  label="Is Correct"
+              />
+              //@ts-ignore
+              <FieldArray name={`${answer}.hobbies`} component={renderHobbies}/>
+            </li>);
+          },
+      )}
     </ul>
 );
 
@@ -101,15 +108,15 @@ const FieldArraysForm = props => {
   return (
       <form onSubmit={handleSubmit}>
         <Field
-            name="clubName"
+            name="question"
             type="textarea"
-            component="textarea"
+            component={renderTextArea}
             rows={7}
             cols={40}
-            label="Club Name"
+            label="Question"
         />
         // @ts-ignore
-        <FieldArray name="members" component={renderMembers}/>
+        <FieldArray name="answers" component={renderAnswers}/>
         <div>
           <Button type="primary" disabled={submitting} htmlType="submit">
             Submit
@@ -126,12 +133,14 @@ const FieldArraysForm = props => {
 export default reduxForm({
   form: 'fieldArrays', // a unique identifier for this form
   initialValues: {
-    clubName: 'Private Club', members: [{
-      firstName: 'Jane',
-      lastName: 'Smith',
+    question: 'Can you answer this question?', answers: [{
+      answer: 'This is correct',
+      explanation: 'Correct',
     }],
   },
   destroyOnUnmount: false,
-  onSubmit: (data) => {console.log(data)},
+  onSubmit: (data) => {
+    console.log(data);
+  },
   validate,
 })(FieldArraysForm);
