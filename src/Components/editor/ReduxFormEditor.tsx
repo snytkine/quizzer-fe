@@ -1,11 +1,14 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, change } from 'redux-form';
+import { Field, FieldArray, reduxForm, change, formValueSelector, arrayPush } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from './validate';
 import { Button, Form, Input, Card, Col, Switch } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
+
+const FORM_NAME = 'editQuestion';
+const selectFormValue = formValueSelector(FORM_NAME);
 
 const renderAnswerTitle = (props: { id: number, fieldName: string }) => {
   const { id, fieldName } = props;
@@ -23,16 +26,16 @@ const renderAnswerTitle = (props: { id: number, fieldName: string }) => {
 
 };
 
-let IsCorrectSwitch = (props: {answer: string, dispatch?: Function}) => {
+let IsCorrectSwitch = (props: { answer: string, dispatch?: Function }) => {
 
-  const {answer, dispatch} = props;
+  const { answer, dispatch } = props;
 
   return <Switch
       checkedChildren="Correct"
       unCheckedChildren="  Incorrect "
       onChange={(checked) => {
-        dispatch(change('editQuestion', `${answer}.isCorrect`, checked));
-      }}/>
+        dispatch(change(FORM_NAME, `${answer}.isCorrect`, checked));
+      }}/>;
 };
 
 IsCorrectSwitch = connect()(IsCorrectSwitch);
@@ -48,115 +51,193 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 
-const renderTextArea = ({ input, label, type, meta: { touched, error } }) => (
+const renderTextArea = ({ input, label, rows, type, meta: { touched, error } }) => (
     <div>
       <label>{label}</label>
       <div>
-        <TextArea {...input} rows={6}/>
+        <TextArea {...input} rows={rows}/>
         {touched && error && <span>{error}</span>}
       </div>
     </div>
 );
 
-const renderHobbies = ({ fields, meta: { error } }) => (
-    <ul>
-      <li>
-        <button type="button" onClick={() => fields.push()}>
-          Add Hobby
-        </button>
-      </li>
-      {fields.map((hobby, index) => (
-          <li key={index}>
-            <button
-                type="button"
-                title="Remove Hobby"
-                onClick={() => fields.remove(index)}
-            />
-            <Field
-                name={hobby}
-                type="text"
-                component={renderField}
-                label={`Hobby #${index + 1}`}
-            />
-          </li>
-      ))}
-      {error && <li className="error">{error}</li>}
-    </ul>
-);
+
+let EditExplanation = (props: { id: number, hasExplanation?: boolean }) => {
+
+  if (props.hasExplanation) {
+    return (
+        <Field
+            name={`answers[${props.id}].explanation`}
+            type="text"
+            component={renderTextArea}
+            label="Explanation"
+        />
+    );
+  } else {
+    return null;
+  }
+
+};
+
+let mapStateToPropsExplanation = (state, ownProps: { id: number }) => {
+  const fieldName = `answers[${ownProps.id}].explanation`;
+  const explanation = selectFormValue(state, fieldName);
+  console.log(`explanation value for ${fieldName}=${explanation}`);
+  const hasExplanation = explanation!==undefined;
+
+  return { hasExplanation };
+};
+
+const mergePropsExplanation = (stateProps: { hasExplanation: boolean, fieldName: string },
+                               dispatchProps: { dispatch: Function },
+                               ownProps: { id: number }) => {
+
+  const { dispatch } = dispatchProps;
+  const { fieldName } = stateProps;
+
+  const addExplanation = () => {
+    if (!stateProps.hasExplanation) {
+      dispatch(change(FORM_NAME, fieldName, ''));
+    }
+  };
+
+  const removeExplanation = () => {
+    dispatch(change(FORM_NAME, fieldName, undefined));
+  };
+
+  return { ...ownProps, ...stateProps, addExplanation, removeExplanation, dispatch };
+
+};
+
+EditExplanation = connect(mapStateToPropsExplanation)(EditExplanation);
 
 
-let renderAnswers = ({ fields, meta: { error, submitFailed }, dispatch }) => (
+let ToggleExplanation = (props: {
+  fieldName: string,
+  hasExplanation?: boolean,
+  dispatch?: Function
+}) => {
+  console.log(`ToggleExplanation fieldName=${props.fieldName} hasExplanation=${props.hasExplanation}`);
+  const { dispatch } = props;
+  let btnText: string;
+  let setExplanation: Function;
+  let danger;
+  let BtnIcon = <PlusOutlined/>;
+
+
+  if (props.hasExplanation) {
+    btnText = 'Explanation';
+    danger = 'danger';
+    BtnIcon = <MinusCircleOutlined/>;
+    setExplanation = () => dispatch(change(FORM_NAME, props.fieldName, undefined));
+  } else {
+    btnText = 'Explanation';
+    setExplanation = () => dispatch(change(FORM_NAME, props.fieldName, ' '));
+  }
+
+  return (
+      <Button
+          type="primary"
+          danger={danger}
+          onClick={() => {
+            setExplanation();
+          }}
+          style={{ width: '100%' }}
+      >
+        {BtnIcon} {btnText}
+      </Button>
+  );
+
+};
+
+
+const mapStateToPropsToggleExplanation = (state, ownProps: { fieldName: string }) => {
+  const explanation = selectFormValue(state, ownProps.fieldName);
+
+  const hasExplanation = explanation!==undefined;
+  console.log(`mapStateToPropsToggleExplanation exp=${explanation} hasExplanation=${hasExplanation}`);
+
+  return { hasExplanation };
+};
+
+ToggleExplanation = connect(mapStateToPropsToggleExplanation)(ToggleExplanation);
+
+
+let renderAnswers = (props) => {
+  const { fields, meta: { error, submitFailed } } = props;
+  return (<div>
     <div>
-      <div>
-        <button type="button" onClick={() => fields.push({})}>
-          Add Answer
-        </button>
-        {submitFailed && error && <span>{error}</span>}
-      </div>
-      {fields.map((answer, index) => {
+      {submitFailed && error && <span>{error}</span>}
+    </div>
+    {fields.map((answer, index) => {
 
+          console.log('answer=', JSON.stringify(answer));
 
-            console.log('answer=', JSON.stringify(answer));
-
-            return (
-                <div key={index}>
-                  <Card title={`Answer ${index + 1}`}
-                        extra={<Switch checkedChildren="1" unCheckedChildren="0"/>}
-                        style={{ width: '100%' }}
-                        actions={[
-                          <IsCorrectSwitch answer={answer}/>,
-                          <MinusCircleOutlined
-                              className="dynamic-delete-button"
-                              onClick={() => fields.remove(index)}
-                          />,
-                        ]}>
-                    <Field
-                        name={`${answer}.body`}
-                        type="text"
-                        component={renderTextArea}
-                        rows={4}
-                        cols={40}
-                        label="Answer"
-                    />
-
-                    <Field
-                        name={`${answer}.explanation`}
-                        type="text"
-                        component={renderTextArea}
-                        label="Explanation"
-                    />
-                  </Card>
-
-                  <button
-                      type="button"
-                      title="Remove Answer"
-                      onClick={() => fields.remove(index)}
+          return (
+              <div key={index}>
+                <Card title={`Answer ${index + 1}`}
+                      style={{ width: '100%' }}
+                      actions={[
+                        <IsCorrectSwitch answer={answer}/>,
+                        <ToggleExplanation fieldName={`${answer}.explanation`}/>,
+                        <DeleteOutlined
+                            className="dynamic-delete-button"
+                            onClick={() => fields.remove(index)}
+                        />,
+                      ]}>
+                  <Field
+                      name={`${answer}.body`}
+                      type="text"
+                      component={renderTextArea}
+                      rows={4}
+                      cols={40}
+                      label="Answer"
                   />
 
-                  //@ts-ignore
-                  <FieldArray name={`${answer}.hobbies`} component={renderHobbies}/>
-                </div>);
-          },
-      )}
-    </div>
-);
+                  <EditExplanation id={index}/>
+                </Card>
 
+              </div>);
+        },
+    )}
+  </div>);
+};
 
-let QuestionEditorForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+let EditQuestion = (props: { dispatch?: Function }) => {
+  const { dispatch } = props;
   return (
-      <form onSubmit={handleSubmit}>
+      <Card
+          title="Question"
+          actions={[
+            <Button onClick={() => {
+              console.log('Adding Fields');
+              dispatch(arrayPush(FORM_NAME, 'answers', { body: '' }));
+            }}>
+              <PlusOutlined/> Add Answer
+            </Button>,
+          ]}>
         <Field
             name="question"
             type="textarea"
             component={renderTextArea}
             rows={7}
-            cols={40}
             label="Question"
         />
-        // @ts-ignore
+      </Card>
+  );
+};
+
+EditQuestion = connect()(EditQuestion);
+
+// @ts-ignore
+let QuestionEditorForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props;
+  return (
+      <form onSubmit={handleSubmit}>
+        <EditQuestion/>
+        { /* @ts-ignore */}
         <FieldArray name="answers" component={renderAnswers}/>
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <Button type="primary" disabled={submitting} htmlType="submit">
             Submit
           </Button>
@@ -174,14 +255,14 @@ renderAnswers = connect()(renderAnswers);
 export default reduxForm({
   form: 'editQuestion', // a unique identifier for this form
   initialValues: {
-    question: 'Can you answer this question?', answers: [{
-      answer: 'This is correct',
-      explanation: 'Correct',
+    question: 'Can you answer this question?',
+    answers: [{
+      body: 'This is correct',
+      explanation: 'Explain 1',
     }],
   },
   destroyOnUnmount: false,
   onSubmit: (data) => {
     console.log(data);
   },
-  validate,
 })(QuestionEditorForm);
