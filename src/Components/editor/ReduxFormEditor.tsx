@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, change, formValueSelector, arrayPush } from 'redux-form';
+import { Field, FieldArray, reduxForm, change, arraySplice, formValueSelector, arrayPush } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from './validate';
 import { Button, Form, Input, Card, Col, Switch, Select } from 'antd';
@@ -130,7 +130,7 @@ let ToggleExplanation = (props: {
     btnText = 'Explanation';
     danger = 'danger';
     BtnIcon = <MinusCircleOutlined/>;
-    setExplanation = () => dispatch(change(FORM_NAME, props.fieldName, undefined));
+    setExplanation = () => dispatch(change(FORM_NAME, props.fieldName, ''));
   } else {
     btnText = 'Explanation';
     setExplanation = () => dispatch(change(FORM_NAME, props.fieldName, ' '));
@@ -141,6 +141,7 @@ let ToggleExplanation = (props: {
           type="primary"
           danger={danger}
           onClick={() => {
+            console.log(`firing setExplanation hasExplanation=${props.hasExplanation}`);
             setExplanation();
           }}
           style={{ width: '100%' }}
@@ -164,6 +165,67 @@ const mapStateToPropsToggleExplanation = (state, ownProps: { fieldName: string }
 ToggleExplanation = connect(mapStateToPropsToggleExplanation)(ToggleExplanation);
 
 
+let ToggleExplanation2 = (props: {
+  answerId: number,
+  answer?: any,
+  dispatch?: Function
+}) => {
+  //
+  const { dispatch, answerId, answer } = props;
+  let newAnswer = {...answer};
+  let btnText: string;
+  let setExplanation: Function;
+  let danger;
+  let BtnIcon = <PlusOutlined/>;
+
+  const hasExplanation = answer && answer.explanation!==undefined;
+
+  console.log(`ToggleExplanation2 answerId=${answerId} answer=${JSON.stringify(answer)} hasExplanation=${hasExplanation}`);
+
+  //const qtype = selectFormValue(state, 'qtype');
+
+
+  if (hasExplanation) {
+    btnText = 'Explanation';
+    danger = 'danger';
+    BtnIcon = <MinusCircleOutlined/>;
+    newAnswer.explanation = undefined;
+  } else {
+    btnText = 'Explanation';
+    newAnswer.explanation = '';
+  }
+
+  setExplanation = () => {
+
+    dispatch(arraySplice(FORM_NAME, 'answers', answerId, 1, newAnswer));
+  };
+
+  return (
+      <Button
+          type="primary"
+          danger={danger}
+          onClick={() => {
+            console.log(`firing setExplanation hasExplanation=${hasExplanation}`);
+            setExplanation();
+          }}
+          style={{ width: '100%' }}
+      >
+        {BtnIcon} {btnText}
+      </Button>
+  );
+
+};
+
+const mapStateToPropsToggleExplanation2 = (state: any, ownProps: { answerId: number }) => {
+  const answers = selectFormValue(state, 'answers');
+  const answer = Array.isArray(answers) && answers[ownProps.answerId];
+
+  return { answer };
+};
+
+ToggleExplanation2 = connect(mapStateToPropsToggleExplanation2)(ToggleExplanation2);
+
+
 let renderAnswers = (props) => {
   const { fields, meta: { error, submitFailed } } = props;
   return (<div>
@@ -180,11 +242,15 @@ let renderAnswers = (props) => {
                       style={{ width: '100%' }}
                       actions={[
                         <IsCorrectSwitch answer={answer}/>,
-                        <ToggleExplanation fieldName={`${answer}.explanation`}/>,
-                        <DeleteOutlined
-                            className="dynamic-delete-button"
+                        <ToggleExplanation2 answerId={index}/>,
+                        <Button
+                            type="primary"
+                            danger
                             onClick={() => fields.remove(index)}
-                        />,
+                        >
+                          <DeleteOutlined/> Delete Answer
+                        </Button>
+                        ,
                       ]}>
                   <Field
                       name={`${answer}.body`}
@@ -221,23 +287,58 @@ const EditQuestionExplanation = () => {
 };
 
 
-let EditQuestionType = (props: { dispatch?: Function }) => {
+let EditQuestionType = (props: { dispatch?: Function, qtype?: string }) => {
 
-  const { dispatch } = props;
+  const { dispatch, qtype } = props;
 
   function handleChange(value) {
     dispatch(change(FORM_NAME, 'qtype', value));
   }
 
   return (
-      <Select defaultValue="single" style={{ width: 120 }} placeholder="Question Type" onChange={handleChange}>
+      <Select defaultValue={qtype} style={{ width: 190 }} placeholder="Question Type" onChange={handleChange}>
         <Option value="single">Single Correct</Option>
         <Option value="multi">Multiple Correct</Option>
       </Select>
   );
 };
 
-EditQuestionType = connect()(EditQuestionType);
+const mapStateToPropsQtype = (state: any) => {
+  const qtype = selectFormValue(state, 'qtype');
+  console.log(`value for qtype=${qtype}`);
+
+  return { qtype };
+};
+
+EditQuestionType = connect(mapStateToPropsQtype)(EditQuestionType);
+
+
+let EditDifficulty = (props: { dispatch?: Function, difficulty?: string }) => {
+
+  const { dispatch, difficulty } = props;
+
+  function handleChange(value) {
+    dispatch(change(FORM_NAME, 'difficulty', value));
+  }
+
+  return (
+      <Select defaultValue={difficulty} style={{ width: 190 }} placeholder="Difficulty" onChange={handleChange}>
+        <Option value="1">Very Easy</Option>
+        <Option value="2">Easy</Option>
+        <Option value="3">Difficult</Option>
+        <Option value="4">Very Difficult</Option>
+      </Select>
+  );
+};
+
+const mapStateToPropsDifficulty = (state: any) => {
+  const difficulty = selectFormValue(state, 'difficulty');
+  console.log(`value for difficulty=${difficulty}`);
+
+  return { difficulty };
+};
+
+EditDifficulty = connect(mapStateToPropsDifficulty)(EditDifficulty);
 
 let EditQuestion = (props: { dispatch?: Function }) => {
   const { dispatch } = props;
@@ -252,6 +353,7 @@ let EditQuestion = (props: { dispatch?: Function }) => {
               <PlusOutlined/> Add Answer
             </Button>,
             <EditQuestionType/>,
+            <EditDifficulty/>,
           ]}>
         <Field
             name="question"
@@ -296,9 +398,14 @@ export default reduxForm({
     answers: [{
       body: 'This is correct',
       explanation: 'Explain 1',
-    }],
+    },
+      {
+        body: 'Answer 2',
+        explanation: 'Explain 2',
+      }],
   },
   destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
   onSubmit: (data) => {
     console.log(data);
   },
