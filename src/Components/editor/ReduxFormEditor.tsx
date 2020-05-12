@@ -2,10 +2,11 @@ import React from 'react';
 import { Field, FieldArray, reduxForm, change, formValueSelector, arrayPush } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from './validate';
-import { Button, Form, Input, Card, Col, Switch } from 'antd';
+import { Button, Form, Input, Card, Col, Switch, Select } from 'antd';
 import { MinusCircleOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const FORM_NAME = 'editQuestion';
 const selectFormValue = formValueSelector(FORM_NAME);
@@ -203,6 +204,41 @@ let renderAnswers = (props) => {
   </div>);
 };
 
+const EditQuestionExplanation = () => {
+  return (
+      <Card
+          title="Explanation"
+          style={{ marginTop: '20px' }}
+      >
+        <Field
+            name="explanation"
+            type="textarea"
+            component={renderTextArea}
+            rows={3}
+        />
+      </Card>
+  );
+};
+
+
+let EditQuestionType = (props: { dispatch?: Function }) => {
+
+  const { dispatch } = props;
+
+  function handleChange(value) {
+    dispatch(change(FORM_NAME, 'qtype', value));
+  }
+
+  return (
+      <Select defaultValue="single" style={{ width: 120 }} placeholder="Question Type" onChange={handleChange}>
+        <Option value="single">Single Correct</Option>
+        <Option value="multi">Multiple Correct</Option>
+      </Select>
+  );
+};
+
+EditQuestionType = connect()(EditQuestionType);
+
 let EditQuestion = (props: { dispatch?: Function }) => {
   const { dispatch } = props;
   return (
@@ -215,6 +251,7 @@ let EditQuestion = (props: { dispatch?: Function }) => {
             }}>
               <PlusOutlined/> Add Answer
             </Button>,
+            <EditQuestionType/>,
           ]}>
         <Field
             name="question"
@@ -229,7 +266,6 @@ let EditQuestion = (props: { dispatch?: Function }) => {
 
 EditQuestion = connect()(EditQuestion);
 
-// @ts-ignore
 let QuestionEditorForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
@@ -237,6 +273,7 @@ let QuestionEditorForm = props => {
         <EditQuestion/>
         { /* @ts-ignore */}
         <FieldArray name="answers" component={renderAnswers}/>
+        <EditQuestionExplanation/>
         <div style={{ marginTop: '10px' }}>
           <Button type="primary" disabled={submitting} htmlType="submit">
             Submit
