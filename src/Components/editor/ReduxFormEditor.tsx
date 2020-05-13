@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, FieldArray, reduxForm, change, arraySplice, formValueSelector, arrayPush } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from './validate';
-import { Button, Form, Input, Card, Col, Switch, Select } from 'antd';
+import { Button, Form, Input, Card, Col, Space, Switch, Select } from 'antd';
 import { MinusCircleOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
@@ -172,7 +172,7 @@ let ToggleExplanation2 = (props: {
 }) => {
   //
   const { dispatch, answerId, answer } = props;
-  let newAnswer = {...answer};
+  let newAnswer = { ...answer };
   let btnText: string;
   let setExplanation: Function;
   let danger;
@@ -239,7 +239,7 @@ let renderAnswers = (props) => {
           return (
               <div key={index}>
                 <Card title={`Answer ${index + 1}`}
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', marginTop: '20px' }}
                       actions={[
                         <IsCorrectSwitch answer={answer}/>,
                         <ToggleExplanation2 answerId={index}/>,
@@ -249,8 +249,7 @@ let renderAnswers = (props) => {
                             onClick={() => fields.remove(index)}
                         >
                           <DeleteOutlined/> Delete Answer
-                        </Button>
-                        ,
+                        </Button>,
                       ]}>
                   <Field
                       name={`${answer}.body`}
@@ -296,7 +295,7 @@ let EditQuestionType = (props: { dispatch?: Function, qtype?: string }) => {
   }
 
   return (
-      <Select defaultValue={qtype} style={{ width: 190 }} placeholder="Question Type" onChange={handleChange}>
+      <Select defaultValue={qtype} placeholder="Question Type" onChange={handleChange}>
         <Option value="single">Single Correct</Option>
         <Option value="multi">Multiple Correct</Option>
       </Select>
@@ -322,7 +321,7 @@ let EditDifficulty = (props: { dispatch?: Function, difficulty?: string }) => {
   }
 
   return (
-      <Select defaultValue={difficulty} style={{ width: 190 }} placeholder="Difficulty" onChange={handleChange}>
+      <Select defaultValue={difficulty} placeholder="Difficulty Level" onChange={handleChange}>
         <Option value="1">Very Easy</Option>
         <Option value="2">Easy</Option>
         <Option value="3">Difficult</Option>
@@ -377,13 +376,15 @@ let QuestionEditorForm = props => {
         <FieldArray name="answers" component={renderAnswers}/>
         <EditQuestionExplanation/>
         <div style={{ marginTop: '10px' }}>
-          <Button type="primary" disabled={submitting} htmlType="submit">
-            Submit
-          </Button>
+          <Space>
+            <Button type="primary" disabled={submitting} htmlType="submit">
+              Submit
+            </Button>
 
-          <button type="button" disabled={pristine || submitting} onClick={reset}>
-            Clear Values
-          </button>
+            <Button onClick={reset}>
+              Reset Values
+            </Button>
+          </Space>
         </div>
       </form>
   );
